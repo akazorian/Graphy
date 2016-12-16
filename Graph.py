@@ -69,5 +69,12 @@ class UndirectedGraph(Graph):
     """ Representation of an undirected graph. """
     def add_edge(self, u, v):
         """ FIX ME """
+        if v not in self.get_in_edges()[u]:
+            self.get_in_edges()[u].append(v)
+            self.get_out_edges()[u].append(v)
+            self.get_in_edges()[v].append(u)
+            self.get_out_edges()[v].append(u)
+            self.edge_count += 1
+
 class DirectedGraph(Graph):
     """ Representation of a directed graph. """
