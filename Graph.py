@@ -1,3 +1,7 @@
+""" In this class, you will find a generic Graph super class
+that is to be extended to implement undirected and directed graphs.
+"""
+
 class Graph(object):
     """
     Initializes the graph object with a list of vertices
@@ -11,6 +15,16 @@ class Graph(object):
         self.in_edges = {}
         self.edge_adj.append(self.out_edges)
         self.edge_adj.append(self.in_edges)
+        self.edge_count = 0
+        self.vertex_count = 0
+
+    def vertex_size(self):
+        """ Returns the number of vertices in the graph. """
+        return self.vertex_count
+
+    def edge_size(self):
+        """ Returns the number of edges in the graph. """
+        return self.edge_count
 
     def get_out_edges(self):
         """ Returns the out edges of the graph. """
@@ -24,13 +38,13 @@ class Graph(object):
         """ Returns the vertices in the graph. """
         return self.vertices
 
-    def get_successor(self, v):
+    def get_successor(self, vertex):
         """ Returns the successors of the specified vertex v. """
-        return self.get_out_edges()[v]
+        return self.get_out_edges()[vertex]
 
-    def get_predecessor(self, v):
+    def get_predecessor(self, vertex):
         """ Returns the predecessors of the specified vertex v. """
-        return self.get_in_edges()[v]
+        return self.get_in_edges()[vertex]
 
     def add(self, vertex):
         """ Adds the vertex to the graph and properly initializes
@@ -39,8 +53,9 @@ class Graph(object):
         self.vertices.add(vertex)
         self.get_in_edges()[vertex] = []
         self.get_out_edges()[vertex] = []
+        self.vertex_count += 1
 
-    def addEdge(self, u, v):
+    def add_edge(self, u, v):
         """ Adds the edge from edge u to v. Meant to be overriden
         by the Graph subclasses mainly undirected and directed graphs.
         """
@@ -51,6 +66,8 @@ class Graph(object):
         """
 
 class UndirectedGraph(Graph):
-    """Empty class"""
-
+    """ Representation of an undirected graph. """
+    def add_edge(self, u, v):
+        """ FIX ME """
 class DirectedGraph(Graph):
+    """ Representation of a directed graph. """
