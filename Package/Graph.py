@@ -46,6 +46,15 @@ class Graph(object):
         """ Returns the predecessors of the specified vertex v. """
         return self.get_in_edges()[vertex]
 
+    def contains(self, vertex):
+        """ Returns true iff I contain the vertex. """
+        return vertex in self.get_vertices()
+
+    def contains_edge(self, u, v):
+        """ Returns true iff I contain the edges
+        from u to v. """
+        return v in self.get_out_edges()[u]
+
     def add(self, vertex):
         """ Adds the vertex to the graph and properly initializes
         the vertex in the out_edges and in_edges list for adding edges.
@@ -65,16 +74,22 @@ class Graph(object):
         edges whether it be in or out edges.
         """
 
+
 class UndirectedGraph(Graph):
     """ Representation of an undirected graph. """
     def add_edge(self, u, v):
-        """ FIX ME """
         if v not in self.get_in_edges()[u]:
             self.get_in_edges()[u].append(v)
             self.get_out_edges()[u].append(v)
             self.get_in_edges()[v].append(u)
             self.get_out_edges()[v].append(u)
             self.edge_count += 1
+
+    def remove(self, vertex):
+        """ FIX ME """
+        self.vertices.remove(vertex)
+        self.out_edges.pop(vertex, None)
+        self.in_edges.pop(vertex, None)
 
 class DirectedGraph(Graph):
     """ Representation of a directed graph. """
