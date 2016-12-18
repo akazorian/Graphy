@@ -87,9 +87,14 @@ class UndirectedGraph(Graph):
 
     def remove(self, vertex):
         """ FIX ME """
-        self.vertices.remove(vertex)
-        self.out_edges.pop(vertex, None)
-        self.in_edges.pop(vertex, None)
+        if self.contains(vertex):
+            successor = self.get_successor(vertex)
+            self.vertices.remove(vertex)
+            self.out_edges.pop(vertex, None)
+            self.in_edges.pop(vertex, None)
+            for v in successor:
+                self.get_successor(v).remove(vertex)
+                self.get_predecessor(v).remove(vertex)
 
 class DirectedGraph(Graph):
     """ Representation of a directed graph. """

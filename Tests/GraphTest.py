@@ -1,3 +1,4 @@
+from random import randint
 import sys
 sys.path.append("/Users/Alex_Kazorian/Documents/Projects/Graphy/Package")
 
@@ -29,8 +30,11 @@ class TestGraphPackage(unittest.TestCase):
         self.add_vertices(test)
         self.make_complete(test)
         self.assertEqual((self.N * (self.N - 1))/2 + self.N, test.edge_size())
-
-
+        for i in range(self.N):
+            test.remove(i)
+            self.assertFalse(test.contains(i))
+            for n in range(i, self.N):
+                self.assertFalse(test.contains_edge(i, n))
 
 if __name__ == '__main__':
     unittest.main()
