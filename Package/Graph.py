@@ -53,7 +53,7 @@ class Graph(object):
     def contains_edge(self, u, v):
         """ Returns true iff I contain the edges
         from u to v. """
-        return v in self.get_out_edges()[u]
+        return u in self.get_out_edges() and v in self.get_successor(u)
 
     def add(self, vertex):
         """ Adds the vertex to the graph and properly initializes
@@ -93,8 +93,9 @@ class UndirectedGraph(Graph):
             self.out_edges.pop(vertex, None)
             self.in_edges.pop(vertex, None)
             for v in successor:
-                self.get_successor(v).remove(vertex)
-                self.get_predecessor(v).remove(vertex)
+                if v != vertex:
+                    self.get_successor(v).remove(vertex)
+                    self.get_predecessor(v).remove(vertex)
 
 class DirectedGraph(Graph):
     """ Representation of a directed graph. """
