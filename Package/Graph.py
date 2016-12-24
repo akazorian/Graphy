@@ -53,7 +53,7 @@ class Graph(object):
     def contains_edge(self, u, v):
         """ Returns true iff I contain the edges
         from u to v. """
-        return u in self.get_out_edges() and v in self.get_successor(u)
+        return self.contains(u) and self.contains(v) and u in self.get_out_edges() and v in self.get_successor(u)
 
     def add(self, vertex):
         """ Adds the vertex to the graph and properly initializes
@@ -74,7 +74,7 @@ class Graph(object):
         edges whether it be in or out edges.
         """
 
-    def remove(self, u, v):
+    def removeEdge(self, u, v):
         """ Removes the edge (u, v) from the graph as specified by the
         graph type. If the graph is of the type UndirectedGraph, then the edge
         (u, v) and (v, u) should be removed from out_edges and in_edges. If the
@@ -84,12 +84,13 @@ class Graph(object):
 
 class UndirectedGraph(Graph):
     """ Representation of an undirected graph. """
+
     def add_edge(self, u, v):
-        if v not in self.get_in_edges()[u]:
-            self.get_in_edges()[u].append(v)
-            self.get_out_edges()[u].append(v)
-            self.get_in_edges()[v].append(u)
-            self.get_out_edges()[v].append(u)
+        if not self.contains_edge(u, v):
+            self.get_predecessor(u).append(v)
+            self.get_successor(u).append(v)
+            self.get_predecessor(v).append(u)
+            self.get_successor(v).append(u)
             self.edge_count += 1
 
     def remove(self, vertex):
@@ -112,3 +113,25 @@ class UndirectedGraph(Graph):
 
 class DirectedGraph(Graph):
     """ Representation of a directed graph. """
+
+    def add_edge(self, u, v):
+        if not self.contains_edge(u, v):
+            self.get_successor(u).append(v)
+            self.get_predecessor(v).append(u)
+            self.edge_count += 1
+
+    def remove(self, vertex):
+        if self.contains(vertex):
+            successor = self.get_successor(vertex)
+            self.vertices.remove(vertex)
+            self.out_edges.pop(vertex, None)
+            self.in_edges.pop(vertex, None)
+            for v in successor:
+                if v != vertex:
+                    print("v: {} \n vertex: {}".format(v, vertex))
+                    self.get_predecessor(v).remove(vertex)
+
+    def removeEdge(self, u, v):
+        if self.contains_edge(u, v):
+            self.get_successor(u).remove(v)
+            self.get_predecessor(v).remove(u)
