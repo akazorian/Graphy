@@ -74,6 +74,13 @@ class Graph(object):
         edges whether it be in or out edges.
         """
 
+    def remove(self, u, v):
+        """ Removes the edge (u, v) from the graph as specified by the
+        graph type. If the graph is of the type UndirectedGraph, then the edge
+        (u, v) and (v, u) should be removed from out_edges and in_edges. If the
+        graph is of the type DirectedGraph, then only the edge (u, v) should be
+        removed.
+        """
 
 class UndirectedGraph(Graph):
     """ Representation of an undirected graph. """
@@ -86,7 +93,6 @@ class UndirectedGraph(Graph):
             self.edge_count += 1
 
     def remove(self, vertex):
-        """ FIX ME """
         if self.contains(vertex):
             successor = self.get_successor(vertex)
             self.vertices.remove(vertex)
@@ -96,6 +102,13 @@ class UndirectedGraph(Graph):
                 if v != vertex:
                     self.get_successor(v).remove(vertex)
                     self.get_predecessor(v).remove(vertex)
+
+    def removeEdge(self, u, v):
+        if self.contains_edge(u, v):
+            self.get_successor(u).remove(v)
+            self.get_predecessor(u).remove(v)
+            self.get_successor(v).remove(u)
+            self.get_predecessor(v).remove(u)
 
 class DirectedGraph(Graph):
     """ Representation of a directed graph. """

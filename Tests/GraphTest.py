@@ -27,6 +27,10 @@ class TestGraphPackage(unittest.TestCase):
 
     def test_Undirected(self):
         test = UndirectedGraph()
+        self.undirected_remove(test)
+        self.undirected_edge_remove(test)
+
+    def undirected_remove(self, test):
         self.add_vertices(test)
         self.make_complete(test)
         self.assertEqual((self.N * (self.N - 1))/2 + self.N, test.edge_size())
@@ -35,6 +39,16 @@ class TestGraphPackage(unittest.TestCase):
             self.assertFalse(test.contains(i))
             for n in range(i, self.N):
                 self.assertFalse(test.contains_edge(i, n))
+                self.assertFalse(test.contains_edge(n, i))
+
+    def undirected_edge_remove(self, test):
+        self.add_vertices(test)
+        self.make_complete(test)
+        for u in test.get_vertices():
+            v = randint(0, self.N)
+            test.removeEdge(u, v)
+            self.assertFalse(test.contains_edge(u, v))
+            self.assertFalse(test.contains_edge(v, u))
 
 if __name__ == '__main__':
     unittest.main()
