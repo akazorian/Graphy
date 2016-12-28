@@ -7,7 +7,7 @@ from Graph import *
 
 class TestGraphPackage(unittest.TestCase):
 
-    N = 4
+    N = 1000
 
     def add_vertices(self, graph):
         for v in range(self.N):
