@@ -123,13 +123,16 @@ class DirectedGraph(Graph):
     def remove(self, vertex):
         if self.contains(vertex):
             successor = self.get_successor(vertex)
+            predecessor = self.get_predecessor(vertex)
             self.vertices.remove(vertex)
             self.out_edges.pop(vertex, None)
             self.in_edges.pop(vertex, None)
             for v in successor:
                 if v != vertex:
-                    print("v: {} \n vertex: {}".format(v, vertex))
                     self.get_predecessor(v).remove(vertex)
+            for v in predecessor:
+                if v != vertex:
+                    self.get_successor(v).remove(vertex)
 
     def removeEdge(self, u, v):
         if self.contains_edge(u, v):
