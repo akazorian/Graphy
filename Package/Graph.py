@@ -148,6 +148,7 @@ class WeightedGraph(object):
     """
     def __init__(self, graph):
         self.graph = graph
+        self.weights = {}
 
     def add_edge(self, u, v, weight=0):
         """
@@ -172,3 +173,10 @@ class WeightedGraph(object):
         """
         Sets the weight of the edge 'u:v' in graph to the specified weight.
         """
+        if self.graph.contains_edge(u, v):
+            self.weights["{}:{}".format(u, v)] = weight
+
+    def get_weight(self, u, v):
+        """ Returns the weight for the edge u:v """
+        if self.graph.contains_edge(u, v):
+            return self.weights["{}:{}".format(u, v)]
