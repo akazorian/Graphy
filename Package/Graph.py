@@ -1,4 +1,4 @@
-""" In this class, you will find a generic Graph super class
+""" In this module, you will find a generic Graph super class
 that is to be extended to implement undirected and directed graphs.
 """
 
@@ -138,3 +138,37 @@ class DirectedGraph(Graph):
         if self.contains_edge(u, v):
             self.get_successor(u).remove(v)
             self.get_predecessor(v).remove(u)
+
+class WeightedGraph(object):
+    """
+    Initializes a weighted graph. In effect, all edges
+    have a weight. If not specified, it will default to 0.
+    This class can work with either directed graphs or undirected
+    graphs depending on the graph given to the constructor.
+    """
+    def __init__(self, graph):
+        self.graph = graph
+
+    def add_edge(self, u, v, weight=0):
+        """
+        Adds the edge 'u:v' to the graph with the specified
+        weight. If a weight is not given, then the default value
+        is 0.
+        """
+
+    def remove(self, vertex):
+        """
+        Removes the vertex and all edges connected to the vertex
+        from the graph, along with all their edge weights.
+        """
+
+    def removeEdge(self, u, v):
+        """
+        Removes the edge 'u:v' from the graph. Removes the edge weight from
+        self as well.
+        """
+
+    def set_weight(self, u, v, weight):
+        """
+        Sets the weight of the edge 'u:v' in graph to the specified weight.
+        """
